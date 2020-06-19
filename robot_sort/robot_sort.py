@@ -97,9 +97,39 @@ class SortingRobot:
         Sort the robot's list.
         """
         # Fill this out
-        pass
 
+        # set the light on to make sure a loop is ran
+        # after sort completion, set the light on to re-iterate through the loop
+        # then start moving right, sorting along the way
+        # when right ends, we're partially sorted, then we go left
+        # while going left, we swap any elements that are less than the item we currently hold
+        # by the time we reach index 0 we should be sorted
 
+        self.set_light_on()
+
+        while self.light_is_on():
+            self.set_light_off()
+
+            while self.can_move_right():
+                self.move_right()
+
+                if self.compare_item() == 1:
+                    self.swap_item()
+                    self.set_light_on()
+                    self.set_light_on()
+
+            while self.can_move_left():
+                self.swap_item()
+                self.move_left()
+                
+                if self.compare_item() == -1:
+                    self.swap_item()
+                    self.set_light_on()
+                
+                self.move_right()
+                self.swap_item()
+                self.move_left()
+                
 if __name__ == "__main__":
     # Test our your implementation from the command line
     # with `python robot_sort.py`
